@@ -12,6 +12,7 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <filesystem>
 
 #define new_line "\n";
 
@@ -37,14 +38,24 @@ short findNextIdx(std::string const& fileName) {
 }
 
 void FileCheck(std::string const& fileName){
-    std::FILE* ifs = fopen(fileName.c_str(), "r");
+    //check for file path(folder)
+    std::filesystem::path filePath{fileName};
+    if (filePath.has_parent_path()) {
+        std::filesystem::create_directories(filePath.parent_path());
+    }
+
+
+    std::ifstream ifs{fileName};
     if(!ifs){
         std::cout << "no data found, generating new data" << new_line;
-        ifs = fopen(fileName.c_str(),"w");
+        std::ofstream ofs{fileName};
+        if(!ofs){
+            std::cout << "Cannot create new file" << new_line;
+            return;
+        }
     }else{
         std::cout << "Data found, loading data" << new_line;
     }
-    fclose(ifs);
 }
 
 void FileWrite(std::size_t sz, std::string const& fileName, std::string const& month, std::string const& year, std::string const& sep, std::vector<Data> const& data){
