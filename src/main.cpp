@@ -32,9 +32,10 @@ int main(){
 
     std::string const fileName = "../data/" + newUser.GetName() + ".txt";
     
+    FileCheck(fileName);
+    
     idx = findNextIdx(fileName);
     //open close the file
-    FileCheck(fileName);
 
     std::cout << "Username " << newUser.GetName() << " confirmed." << new_line;
 
