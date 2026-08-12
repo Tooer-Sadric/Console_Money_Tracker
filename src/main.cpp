@@ -68,6 +68,7 @@ int main(){
     std::getline(std::cin,tmpQual);
     quantity = std::stoi(tmpQual);
 
+    std::cout << "You have inputted " << quantity << " " << item << " with the price of $" << price << new_line;
 
     Data tmp{item,price,quantity};
     std::vector<Data> dataVal;
