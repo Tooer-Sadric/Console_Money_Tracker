@@ -41,40 +41,49 @@ int main(){
 
     std::cout << new_line;
 
-    
-    std::cout << "Please enter the current month: ";
+    std::vector<Data> dataVal;
+    char again = 'y';
     std::string month;
+    std::string year;
+    std::cout << "Please enter the current month: ";
     std::getline(std::cin,month);
     
     std::cout << "Please enter the current year: ";
-    std::string year;
     std::getline(std::cin,year);
 
     std::cout << "you have inputted " << month << " " << year << new_line;
 
-    std::cout << "What item are you logging today?: ";
-    std::string item;
-    std::getline(std::cin,item);
+    do{
+        std::cout << "What item are you logging today?: ";
+        std::string item;
+        std::getline(std::cin,item);
+        
+        std::cout << "How much was the item?: ";
+        double price;
+        std::string tmpPrice;
+        std::getline(std::cin,tmpPrice);
+        price = std::stod(tmpPrice);
+
+        std::cout << "How many did you buy?: ";
+        int quantity;
+        std::string tmpQual;
+        std::getline(std::cin,tmpQual);
+        quantity = std::stoi(tmpQual);
+
+        std::cout << "You have inputted " << quantity << " " << item << " with the price of $" << price << new_line;
+
+        Data tmp{item,price,quantity};
+        dataVal.emplace_back(tmp);
+
+        std::cout << "Would you like to log another item? (y/n): ";
+        std::string response;
+        std::getline(std::cin, response);
+
+        again = response.empty() ? 'n' : std::tolower(response[0]);
+
+    }while(again == 'y');
     
-    std::cout << "How much was the item?: ";
-    double price;
-    std::string tmpPrice;
-    std::getline(std::cin,tmpPrice);
-    price = std::stod(tmpPrice);
-
-    std::cout << "How many did you buy?: ";
-    int quantity;
-    std::string tmpQual;
-    std::getline(std::cin,tmpQual);
-    quantity = std::stoi(tmpQual);
-
-    std::cout << "You have inputted " << quantity << " " << item << " with the price of $" << price << new_line;
-
-    Data tmp{item,price,quantity};
-    std::vector<Data> dataVal;
-    
-    dataVal.emplace_back(tmp);
-
+    //write after collating all the data
     FileWrite(sep.size(),fileName,month,year, sep,dataVal);
 
     //exit prog
